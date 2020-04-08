@@ -5,6 +5,8 @@ import * as cors from 'cors'
 import * as helmet from 'helmet'
 import * as compression from 'compression'
 import * as lusca from 'lusca'
+import {errorhandler} from './app/errors/error.handler'
+import {router} from './app/routes/routes'
 dotenv.config()
 const app = express();
 //config
@@ -34,8 +36,10 @@ app.use(lusca.xssProtection(true));
 
 //Routes
 
+app.use(router)
 
-
+// Error Handler
+app.use(errorhandler)
 const server = app.listen(port, () => {
   console.log('Listening at http://localhost:' + port + '/api');
 });
